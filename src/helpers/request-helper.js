@@ -1,5 +1,5 @@
 class RequestHelper {
-    const URL = 'https://driven-panda-75.hasura.app/v1/graphql';
+    URL = 'https://driven-panda-75.hasura.app/v1/graphql'
 
     async fetchGraphQL(operationsDoc, operationName, variables) {
         const result = await fetch(this.URL, {

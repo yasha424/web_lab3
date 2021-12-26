@@ -1,3 +1,5 @@
+import { gql } from '@apollo/client'
+
 export class QUERIES {
     static QUERY_Get_All = () => `
   		query MyQuery {
@@ -9,7 +11,7 @@ export class QUERIES {
       			id
     		}
   		}
-	`;
+	`
 
     static MUTATION_Insert = (title, director, budget, gross) =>
         `mutation MyMutation {
@@ -23,5 +25,16 @@ export class QUERIES {
                 }
             }
         }
-    `;
-};
+    `
+
+    static SUBSCRIPTION_All_Movies = gql`
+        subscription MySubscription {
+            lab3_movies {
+                title
+                director
+                budget
+                gross
+            }
+        }
+    `
+}

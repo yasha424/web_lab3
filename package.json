@@ -6,8 +6,8 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
-    "prettier": "prettier --ignore-path .gitignore -c .",
-    "prettier-fix": "prettier --ignore-path .gitignore -w .",
+    "prettier": "prettier --ignore-path .gitignore -c *.json",
+    "prettier-fix": "prettier --ignore-path .gitignore -w *.json",
     "eslint": "eslint --ignore-pattern .gitignore **/*.js",
     "eslint-fix": "eslint --ignore-pattern .gitignore --fix **/*.js",
     "prepare": "husky install"
@@ -23,11 +23,15 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "@apollo/client": "^3.5.6",
     "eslint": "^8.5.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-sonarjs": "^0.11.0",
+    "graphql": "^16.2.0",
     "husky": "^7.0.4",
     "prettier": "^2.5.1",
-    "sirv-cli": "^1.0.0"
+    "sirv-cli": "^1.0.0",
+    "subscriptions-transport-ws": "^0.11.0",
+    "svelte-apollo": "^0.4.0"
   }
 }
