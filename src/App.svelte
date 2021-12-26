@@ -6,10 +6,6 @@
 	import { WebSocketLink } from "@apollo/client/link/ws";
 
 	function createApolloClient() {
-   		// const httpLink = new HttpLink({
-     	// 	uri: "https://driven-panda-75.hasura.app/v1/graphql",
-   		// });
-
 		const wsLink = new WebSocketLink({
 			uri: "wss://driven-panda-75.hasura.app/v1/graphql",
 			options: {
@@ -31,27 +27,6 @@
  	setClient(client);
 
 	const movies = subscribe(QUERIES.SUBSCRIPTION_All_Movies);
-
-	// window.onload = async () => {
-	// 	const {lab3_movies} = await RequestHelper.startFetchMyQuery(QUERIES.QUERY_Get_All());
-	// 	movies = lab3_movies;
-	// 	renderTable();
-	// }
-
-	// const renderTable = () => {
-	// 	const table = document.querySelector('table');
-	// 	movies.forEach((movie) => {
-	// 		table.innerHTML += `
-	// 		<tr>
-	// 			<td>${movie.title}</td>
-	// 			<td>${movie.director}</td>
-	// 			<td>${movie.budget}$</td>
-	// 			<td>${movie.gross}$</td>
-	// 		</tr>
-	// 		`;
-	// 	});
-	// };
-
 	const convertToNumber = (string) => {
 		return isNaN(+string) ? 0 : +string;
 	};
@@ -69,7 +44,6 @@
 </script>
 
 <main>
-	<!-- {JSON.stringify($movies)} -->
 	{#if $movies.loading}
    		<div>loading ...</div>
  	{:else if $movies.error}
