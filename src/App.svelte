@@ -121,6 +121,7 @@
 
 button {
 	min-width: 20%;
+	background-color: magenta;
 }
 
 .delete_block {
@@ -135,5 +136,13 @@ button {
 
 table {
 	width: 100%;
+}
+
+tr:nth-child(even) {
+	background-color: rgb(1, 172, 44);
+}
+
+tr:nth-child(odd) {
+	background-color: rgb(114, 0, 194);
 }
 </style>
