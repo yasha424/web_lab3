@@ -4,6 +4,7 @@
 	import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 	import { setClient, subscribe, mutation } from "svelte-apollo";
 	import { WebSocketLink } from "@apollo/client/link/ws";
+	import { Stretch } from 'svelte-loading-spinners'
 
 	function createApolloClient() {
 		const wsLink = new WebSocketLink({
@@ -40,7 +41,14 @@
 		if (!name) {
 			return;
 		}
-		const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Insert(name, director, budget, gross));
+		try {
+			const spinner = document.getElementById('spinner-item');
+			spinner.style.display = 'block';
+			const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Insert(name, director, budget, gross));
+			spinner.style.display = 'none';
+		} catch (e) {
+			console.error(e);
+		}
 	};
 
 	const DeleteMovie = async () => {
@@ -48,7 +56,14 @@
 		if (!name) {
 			return;
 		}
-		const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Delete(name));
+		try {
+			const spinner = document.getElementById('spinner-item');
+			spinner.style.display = 'block';
+			const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Delete(name));
+			spinner.style.display = 'none';
+		} catch (e) {
+			console.error(e);
+		}
 	}
 </script>
 
@@ -87,6 +102,9 @@
 			</tr>
 		{/each}
 	</table>
+	<div class="spinner-item" id="spinner-item" title="Stretch">
+    	<Stretch/>
+  	</div>
 	{/if}
 </main>
 
@@ -108,6 +126,11 @@ button {
 .delete_block {
 	display: flex;
 	justify-content: space-between;
+}
+
+.spinner-item {
+	display: none;
+	margin: auto;
 }
 
 table {

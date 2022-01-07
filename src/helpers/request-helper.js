@@ -36,6 +36,7 @@ class RequestHelper {
 
         if (errors) {
             console.error(errors);
+            throw errors[0].message;
         }
         return data;
     }
