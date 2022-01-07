@@ -115,18 +115,15 @@
 	justify-content: space-between;
 }
 
-.delete_name {
+.delete_block {
+	display: flex;
 	width: 100%;
+	justify-content: space-between;
 }
 
 button {
-	min-width: 20%;
+	/* min-width: 20%; */
 	background-color: magenta;
-}
-
-.delete_block {
-	display: flex;
-	justify-content: space-between;
 }
 
 .spinner-item {
