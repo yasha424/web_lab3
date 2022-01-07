@@ -28,6 +28,7 @@
  	setClient(client);
 
 	const movies = subscribe(QUERIES.SUBSCRIPTION_All_Movies);
+
 	const convertToNumber = (string) => {
 		return isNaN(+string) ? 0 : +string;
 	};
@@ -41,6 +42,7 @@
 		if (!name) {
 			return;
 		}
+
 		try {
 			const spinner = document.getElementById('spinner-item');
 			spinner.style.display = 'block';

@@ -14,25 +14,8 @@ class RequestHelper {
         return await result.json();
     }
 
-    fetchMyQuery(operationsDoc) {
-        return this.fetchGraphQL(operationsDoc, "MyQuery", {});
-    }
-
-    async startFetchMyQuery(operationsDoc) {
-        const { errors, data } = await this.fetchMyQuery(operationsDoc);
-
-        if (errors) {
-            console.error(errors);
-        }
-        return data;
-    }
-
-    executeMyMutation(operationsDoc) {
-        return this.fetchGraphQL(operationsDoc, "MyMutation", {});
-    }
-
     async startExecuteMyMutation(operationsDoc) {
-        const { errors, data } = await this.executeMyMutation(operationsDoc);
+        const { errors, data } = await this.fetchGraphQL(operationsDoc, "MyMutation", {});
 
         if (errors) {
             console.error(errors);
