@@ -7,7 +7,7 @@
 
 	function createApolloClient() {
 		const wsLink = new WebSocketLink({
-			uri: "wss://driven-panda-75.hasura.app/v1/graphql",
+			uri: URI,
 			options: {
 				reconnect: true,
 			},
@@ -31,16 +31,25 @@
 		return isNaN(+string) ? 0 : +string;
 	};
 
-	const AddMovie = async  () => {
-		const name = prompt("Movie title: ") ?? "" ;
-		const director = prompt("Movie Director: ") ?? "" ;
-		const budget = convertToNumber(prompt("Movie budget: ") ?? "");
-		const gross = convertToNumber(prompt("Movie gross: ") ?? "");
+	const AddMovie = async () => {
+		const name = document.getElementById('name').value;
+		const director = document.getElementById('director').value;
+		const budget = convertToNumber(document.getElementById('budget').value);
+		const gross = convertToNumber(document.getElementById('gross').value);
+
 		if (!name) {
 			return;
 		}
 		const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Insert(name, director, budget, gross));
 	};
+
+	const DeleteMovie = async () => {
+		const name = document.getElementById('delete_name').value;
+		if (!name) {
+			return;
+		}
+		const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Delete(name));
+	}
 </script>
 
 <main>
@@ -49,7 +58,17 @@
  	{:else if $movies.error}
    		<div>Error!</div>
 	{:else if $movies.data}
-	<button on:click={AddMovie}>Add movie</button>
+	<div class="input_block">
+		<input placeholder="Name" id="name">
+		<input placeholder="Director" id="director">
+		<input placeholder="Budget" id="budget">
+		<input placeholder="Gross" id="gross">
+		<button on:click={AddMovie}>Add movie</button>
+	</div>
+	<div class="delete_block">
+		<input placeholder="Name" id="delete_name" class="delete_name">
+		<button on:click={DeleteMovie}>Delete movie</button>
+	</div>
 	<table border="1">
 		<caption>Movies</caption>
 			<tr>
@@ -72,4 +91,26 @@
 </main>
 
 <style>
+.input_block {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.delete_name {
+	width: 100%;
+}
+
+button {
+	min-width: 20%;
+}
+
+.delete_block {
+	display: flex;
+	justify-content: space-between;
+}
+
+table {
+	width: 100%;
+}
 </style>

@@ -37,4 +37,19 @@ export class QUERIES {
             }
         }
     `
+
+    static MUTATION_Delete = (title) =>
+        `mutation MyMutation {
+            delete_lab3_movies(where: {title: {_eq: "${title}"}}) {
+                affected_rows
+                returning {
+                    budget
+                    director
+                    gross
+                    id
+                    title
+                }
+            }
+        }
+    `
 }
