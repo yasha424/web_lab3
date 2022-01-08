@@ -111,6 +111,11 @@
 </main>
 
 <style>
+:root {
+	--green-color: #01ac2c;
+	--purple-color: #7200c2;
+}
+
 .input_block {
 	display: flex;
 	width: 100%;
@@ -124,8 +129,7 @@
 }
 
 button {
-	/* min-width: 20%; */
-	background-color: magenta;
+	background-color: var(--green-color);
 }
 
 .spinner-item {
@@ -138,10 +142,10 @@ table {
 }
 
 tr:nth-child(even) {
-	background-color: rgb(1, 172, 44);
+	background-color: var(--green-color);
 }
 
 tr:nth-child(odd) {
-	background-color: rgb(114, 0, 194);
+	background-color: var(--purple-color);
 }
 </style>
