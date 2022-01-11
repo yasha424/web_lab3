@@ -3,7 +3,7 @@ import { gql } from '@apollo/client'
 export class QUERIES {
     static QUERY_Get_All = () => `
   		query MyQuery {
-    		lab3_movies {
+    		lab3_movies (order_by: {id: asc}) {
       			title
       			director
       			budget
@@ -29,7 +29,7 @@ export class QUERIES {
 
     static SUBSCRIPTION_All_Movies = gql`
         subscription MySubscription {
-            lab3_movies {
+            lab3_movies (order_by: {id: asc}) {
                 title
                 director
                 budget

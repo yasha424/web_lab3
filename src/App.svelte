@@ -83,7 +83,9 @@
 
 <main>
 	{#if $movies.loading}
-   		<div>loading ...</div>
+		<div>
+    		<Stretch />
+  		</div>
 	{:else if !$is_online}
 		<div>Offline</div>
  	{:else if $movies.error}
