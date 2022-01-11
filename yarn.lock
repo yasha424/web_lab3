@@ -1638,6 +1638,11 @@
   "resolved" "https://registry.npmjs.org/svelte-simple-modal/-/svelte-simple-modal-1.2.0.tgz"
   "version" "1.2.0"
 
+"svelte-store@^0.0.2":
+  "integrity" "sha512-Kq43XbSE/mQEw4bENBBpI8MWJo4D09GakmG1nP2bN+so24VVK7j0On3Zmmxpl75dBYZnlaneYmDr7GBktRJmGw=="
+  "resolved" "https://registry.npmjs.org/svelte-store/-/svelte-store-0.0.2.tgz"
+  "version" "0.0.2"
+
 "svelte@^3.0.0", "svelte@^3.31.2", "svelte@>=3.5.0":
   "integrity" "sha512-N7bBZJH0iF24wsalFZF+fVYMUOigaAUQMIcEKHO3jstK/iL8VmP9xE+P0/a76+FkNcWt+TDv2Gx1taUoUscrvw=="
   "resolved" "https://registry.npmjs.org/svelte/-/svelte-3.38.3.tgz"

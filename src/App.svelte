@@ -5,6 +5,17 @@
 	import { setClient, subscribe, mutation } from "svelte-apollo";
 	import { WebSocketLink } from "@apollo/client/link/ws";
 	import { Stretch } from 'svelte-loading-spinners'
+	import { writable } from 'svelte/store';
+
+	const is_online = writable(true);
+
+	window.onoffline = () => {
+		is_online.set(false);
+	};
+
+	window.ononline = () => {
+		is_online.set(true);
+	};
 
 	function createApolloClient() {
 		const wsLink = new WebSocketLink({
@@ -72,6 +83,8 @@
 <main>
 	{#if $movies.loading}
    		<div>loading ...</div>
+	{:else if !$is_online}
+		<div>Offline</div>
  	{:else if $movies.error}
    		<div>Error!</div>
 	{:else if $movies.data}
