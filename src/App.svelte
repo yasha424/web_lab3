@@ -111,7 +111,7 @@
 				<th>Gross</th>
 			</tr>
 
-		{#each $movies.data.lab3_movies as movie}
+		{#each $movies.data.lab3_movies as movie (movie.id)}
 			<tr>
 				<td>{movie.title}</td>
 				<td>{movie.director}</td>

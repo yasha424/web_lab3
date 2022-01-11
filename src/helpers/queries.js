@@ -34,6 +34,7 @@ export class QUERIES {
                 director
                 budget
                 gross
+                id
             }
         }
     `
