@@ -8,6 +8,9 @@
 	import { writable } from 'svelte/store';
 
 	const is_online = writable(true);
+	const add_movie = {};
+	const delete_movie = {};
+	const is_displayed = writable(false);
 
 	window.onoffline = () => {
 		is_online.set(false);
@@ -45,35 +48,33 @@
 	};
 
 	const AddMovie = async () => {
-		const name = document.getElementById('name').value;
-		const director = document.getElementById('director').value;
-		const budget = convertToNumber(document.getElementById('budget').value);
-		const gross = convertToNumber(document.getElementById('gross').value);
+		const name = add_movie.name;
+		const director = add_movie.director ? add_movie.director : "";
+		const budget = convertToNumber(add_movie.budget);
+		const gross = convertToNumber(add_movie.gross);
 
 		if (!name) {
 			return;
 		}
 
 		try {
-			const spinner = document.getElementById('spinner-item');
-			spinner.style.display = 'block';
+			$is_displayed = true;
 			const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Insert(name, director, budget, gross));
-			spinner.style.display = 'none';
+			$is_displayed = false;
 		} catch (e) {
 			console.error(e);
 		}
 	};
 
 	const DeleteMovie = async () => {
-		const name = document.getElementById('delete_name').value;
+		const name = delete_movie.name;
 		if (!name) {
 			return;
 		}
 		try {
-			const spinner = document.getElementById('spinner-item');
-			spinner.style.display = 'block';
+			$is_displayed = true;
 			const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Delete(name));
-			spinner.style.display = 'none';
+			$is_displayed = false;
 		} catch (e) {
 			console.error(e);
 		}
@@ -89,14 +90,14 @@
    		<div>Error!</div>
 	{:else if $movies.data}
 	<div class="input_block">
-		<input placeholder="Name" id="name">
-		<input placeholder="Director" id="director">
-		<input placeholder="Budget" id="budget">
-		<input placeholder="Gross" id="gross">
+		<input bind:value={add_movie.name} placeholder="Title" id="name">
+		<input bind:value={add_movie.director} placeholder="Director" id="director">
+		<input bind:value={add_movie.budget} placeholder="Budget" id="budget">
+		<input bind:value={add_movie.gross} placeholder="Gross" id="gross">
 		<button on:click={AddMovie}>Add movie</button>
 	</div>
 	<div class="delete_block">
-		<input placeholder="Name" id="delete_name" class="delete_name">
+		<input bind:value={delete_movie.name} placeholder="Title" id="delete_name" class="delete_name">
 		<button on:click={DeleteMovie}>Delete movie</button>
 	</div>
 	<table border="1">
@@ -117,8 +118,8 @@
 			</tr>
 		{/each}
 	</table>
-	<div class="spinner-item" id="spinner-item" title="Stretch">
-    	<Stretch/>
+	<div class={$is_displayed ? "display_block" : "display_none"}>
+    	<Stretch />
   	</div>
 	{/if}
 </main>
@@ -145,9 +146,12 @@ button {
 	background-color: var(--green-color);
 }
 
-.spinner-item {
+.display_block {
+	display: block;
+}
+
+.display_none {
 	display: none;
-	margin: auto;
 }
 
 table {
