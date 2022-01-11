@@ -89,7 +89,7 @@
 	{:else if !$is_online}
 		<div>Offline</div>
  	{:else if $movies.error}
-   		<div>Error!</div>
+   		<div>Error: {$movies.error.message}</div>
 	{:else if $movies.data}
 	<div class="input_block">
 		<input bind:value={add_movie.name} placeholder="Title" id="name">
