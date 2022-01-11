@@ -11,7 +11,7 @@ class RequestHelper {
             }),
         });
 
-        return await result.json();
+        return result.json();
     }
 
     async startExecuteMyMutation(operationsDoc) {
