@@ -39,9 +39,9 @@ export class QUERIES {
         }
     `
 
-    static MUTATION_Delete = (title) =>
+    static MUTATION_Delete = (id) =>
         `mutation MyMutation {
-            delete_lab3_movies(where: {title: {_eq: "${title}"}}) {
+            delete_lab3_movies(where: {id: {_eq: "${id}"}}) {
                 affected_rows
                 returning {
                     budget

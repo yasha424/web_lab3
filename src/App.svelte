@@ -66,14 +66,10 @@
 		}
 	};
 
-	const DeleteMovie = async () => {
-		const name = delete_movie.name;
-		if (!name) {
-			return;
-		}
+	const DeleteMovie = async (id) => {
 		try {
 			$is_displayed = true;
-			const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Delete(name));
+			const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Delete(id));
 			$is_displayed = false;
 		} catch (e) {
 			console.error(e);
@@ -117,6 +113,7 @@
 				<td>{movie.director}</td>
 				<td>{movie.budget}</td>
 				<td>{movie.gross}</td>
+				<button class="delete_btn" id={movie.id} on:click={DeleteMovie(movie.id)}>Delete</button>
 			</tr>
 		{/each}
 	</table>
