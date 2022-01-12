@@ -1,3 +1,5 @@
+import { isDisplayed } from '../store';
+
 class RequestHelper {
     URL = another_uri;
 
@@ -15,12 +17,15 @@ class RequestHelper {
     }
 
     async startExecuteMyMutation(operationsDoc) {
+        isDisplayed.set(true);
         const { errors, data } = await this.fetchGraphQL(operationsDoc, "MyMutation", {});
 
         if (errors) {
             console.error(errors);
+            is_displayed.set(false);
             throw errors[0].message;
         }
+        isDisplayed.set(false);
         return data;
     }
 }

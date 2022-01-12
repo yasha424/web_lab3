@@ -5,19 +5,20 @@
 	import { setClient, subscribe, mutation } from "svelte-apollo";
 	import { WebSocketLink } from "@apollo/client/link/ws";
 	import { Stretch } from 'svelte-loading-spinners'
-	import { writable } from 'svelte/store';
+	import { isDisplayed } from './store';
 
-	const is_online = writable(true);
+	let is_online = true;
+	let is_error = false;
+	let error;
 	const add_movie = {};
 	const delete_movie = {};
-	const is_displayed = writable(false);
 
 	window.onoffline = () => {
-		is_online.set(false);
+		is_online = false;
 	};
 
 	window.ononline = () => {
-		is_online.set(true);
+		is_online = true;
 	};
 
 	function createApolloClient() {
@@ -58,20 +59,20 @@
 		}
 
 		try {
-			$is_displayed = true;
 			const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Insert(name, director, budget, gross));
-			$is_displayed = false;
 		} catch (e) {
+			error = e;
+			is_error = true;
 			console.error(e);
 		}
 	};
 
 	const DeleteMovie = async (id) => {
 		try {
-			$is_displayed = true;
 			const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Delete(id));
-			$is_displayed = false;
 		} catch (e) {
+			error = e;
+			is_error = true;
 			console.error(e);
 		}
 	}
@@ -82,21 +83,19 @@
 		<div>
     		<Stretch />
   		</div>
-	{:else if !$is_online}
+	{:else if !is_online}
 		<div>Offline</div>
  	{:else if $movies.error}
    		<div>Error: {$movies.error.message}</div>
+	{:else if is_error}
+		<div> Error: {error}</div>
 	{:else if $movies.data}
 	<div class="input_block">
-		<input bind:value={add_movie.name} placeholder="Title" id="name">
-		<input bind:value={add_movie.director} placeholder="Director" id="director">
-		<input bind:value={add_movie.budget} placeholder="Budget" id="budget">
-		<input bind:value={add_movie.gross} placeholder="Gross" id="gross">
+		<input bind:value={add_movie.name} placeholder="Title">
+		<input bind:value={add_movie.director} placeholder="Director">
+		<input bind:value={add_movie.budget} placeholder="Budget">
+		<input bind:value={add_movie.gross} placeholder="Gross">
 		<button on:click={AddMovie}>Add movie</button>
-	</div>
-	<div class="delete_block">
-		<input bind:value={delete_movie.name} placeholder="Title" id="delete_name" class="delete_name">
-		<button on:click={DeleteMovie}>Delete movie</button>
 	</div>
 	<table border="1">
 		<caption>Movies</caption>
@@ -113,11 +112,11 @@
 				<td>{movie.director}</td>
 				<td>{movie.budget}</td>
 				<td>{movie.gross}</td>
-				<button class="delete_btn" id={movie.id} on:click={DeleteMovie(movie.id)}>Delete</button>
+				<button class="delete_btn" on:click={DeleteMovie(movie.id)}>Delete</button>
 			</tr>
 		{/each}
 	</table>
-	<div class={$is_displayed ? "display_block" : "display_none"}>
+	<div class={$isDisplayed ? "display_block" : "display_none"}>
     	<Stretch />
   	</div>
 	{/if}
@@ -127,15 +126,11 @@
 :root {
 	--green-color: #01ac2c;
 	--purple-color: #7200c2;
+	--delete-btn-color: #d60000;
+	--black-color: #000;
 }
 
 .input_block {
-	display: flex;
-	width: 100%;
-	justify-content: space-between;
-}
-
-.delete_block {
 	display: flex;
 	width: 100%;
 	justify-content: space-between;
@@ -155,6 +150,15 @@ button {
 
 table {
 	width: 100%;
+}
+
+.delete_btn {
+	font-weight: bold;
+	color: var(--black-color);
+	background-color: var(--delete-btn-color);
+	margin: auto;
+	width: 100%;
+	height: 100%;
 }
 
 tr:nth-child(even) {
