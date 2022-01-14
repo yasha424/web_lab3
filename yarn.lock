@@ -1633,6 +1633,11 @@
   "resolved" "https://registry.npmjs.org/svelte-loading-spinners/-/svelte-loading-spinners-0.1.7.tgz"
   "version" "0.1.7"
 
+"svelte-notifications@^0.9.93":
+  "integrity" "sha512-xtgBT653R8j3KzKhrRdnZKhdcgi22RbN27dvn4GSzf6Mw5ESOFj+j8tNe1FDaeA/dU+r2r2ZsG2rvCqLDsZ4ow=="
+  "resolved" "https://registry.npmjs.org/svelte-notifications/-/svelte-notifications-0.9.93.tgz"
+  "version" "0.9.93"
+
 "svelte-simple-modal@^1.2.0":
   "integrity" "sha512-uiKQ3/iNMepzMkaw15wHpP+GieuuB8SDg+Mm+8uiS3hQDJAyjc8ApR/YtUlZs77d779sJ3lukhao+WkmoIyxzA=="
   "resolved" "https://registry.npmjs.org/svelte-simple-modal/-/svelte-simple-modal-1.2.0.tgz"

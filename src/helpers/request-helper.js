@@ -18,15 +18,20 @@ class RequestHelper {
 
     async startExecuteMyMutation(operationsDoc) {
         isDisplayed.set(true);
-        const { errors, data } = await this.fetchGraphQL(operationsDoc, "MyMutation", {});
-
-        if (errors) {
-            console.error(errors);
-            is_displayed.set(false);
-            throw errors[0].message;
+        try {
+            const { errors, data } = await this.fetchGraphQL(operationsDoc, "MyMutation", {});
+            if (errors) {
+                console.error(errors);
+                isDisplayed.set(false);
+                throw errors[0].message;
+            }
+            return data;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        } finally {
+            isDisplayed.set(false);
         }
-        isDisplayed.set(false);
-        return data;
     }
 }
 

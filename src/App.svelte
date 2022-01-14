@@ -1,17 +1,18 @@
 <script>
 	import RequestHelper from './helpers/request-helper';
 	import { QUERIES } from './helpers/queries';
-	import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
-	import { setClient, subscribe, mutation } from "svelte-apollo";
+	import { ApolloClient, InMemoryCache } from '@apollo/client';
+	import { setClient, subscribe } from "svelte-apollo";
 	import { WebSocketLink } from "@apollo/client/link/ws";
 	import { Stretch } from 'svelte-loading-spinners'
 	import { isDisplayed } from './store';
 
 	let is_online = true;
-	let is_error = false;
-	let error;
+	let error = '';
+	$: error && setTimeout(() => {error = '';}, 2000);
 	const add_movie = {};
 	const delete_movie = {};
+
 
 	window.onoffline = () => {
 		is_online = false;
@@ -54,15 +55,20 @@
 		const budget = convertToNumber(add_movie.budget);
 		const gross = convertToNumber(add_movie.gross);
 
+		add_movie.name = '';
+		add_movie.director = '';
+		add_movie.budget = '';
+		add_movie.gross = '';
+
 		if (!name) {
 			return;
 		}
 
 		try {
 			const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Insert(name, director, budget, gross));
+			console.log(res);
 		} catch (e) {
 			error = e;
-			is_error = true;
 			console.error(e);
 		}
 	};
@@ -72,7 +78,6 @@
 			const res = await RequestHelper.startExecuteMyMutation(QUERIES.MUTATION_Delete(id));
 		} catch (e) {
 			error = e;
-			is_error = true;
 			console.error(e);
 		}
 	}
@@ -87,7 +92,7 @@
 		<div>Offline</div>
  	{:else if $movies.error}
    		<div>Error: {$movies.error.message}</div>
-	{:else if is_error}
+	{:else if error}
 		<div> Error: {error}</div>
 	{:else if $movies.data}
 	<div class="input_block">
